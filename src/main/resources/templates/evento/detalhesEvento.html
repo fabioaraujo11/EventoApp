@@ -10,37 +10,76 @@
 	href="materialize/css/materialize.min.css" media="screen,projection" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
-<body>
+<body class="container">
 
 	<h1>Evento:</h1>
 
 	<a class="waves-effect waves-light btn" href="/eventos"><i
 		class="material-icons left">format_list_bulleted</i>Lista de Eventos</a>
-	<div class="container" th:each="evento : ${evento}">
+	<div th:each="evento : ${evento}">
 		<div class="row">
-			<p>
-				Nome: <span th:text="${evento.nome}"></span>
-			</p>
-			<p>
-				Local: <span th:text="${evento.local}"></span>
-			</p>
-			<p>
-				Data: <span th:text="${evento.data}"></span>
-			</p>
-			<p>
-				Horário: <span th:text="${evento.horario}"></span>
-			</p>
+			<div class="input-field col s3">
+				<p>
+					Nome: <span th:text="${evento.nome}"></span>
+				</p>
+			</div>
+			<div class="input-field col s3">
+				<p>
+					Local: <span th:text="${evento.local}"></span>
+				</p>
+			</div>
+			<div class="input-field col s3">
+				<p>
+					Data: <span th:text="${evento.data}"></span>
+				</p>
+			</div>
+			<div class="input-field col s3">
+				<p>
+					Horário: <span th:text="${evento.horario}"></span>
+				</p>
+			</div>
 		</div>
 
+		<th:block th:include="error"></th:block>
+
 		<form method="post">
-			Nome:<input type="text" value="" name="nomeConvidado" />
-			RG:<input type="text" value="" name="rg" />
-			
-			<button class="waves-effect waves-light btn" type="submit">Adicionar</button>
-			
+			<div class="row">
+				<div class="input-field col s6">
+					<input type="text" value="" name="nomeConvidado"
+						placeholder="Nome do Convidado" required />
+				</div>
+				<div class="input-field col s3">
+					<input type="text" value="" name="rg" placeholder="RG do Convidado"
+						required />
+				</div>
+				<div class="input-field col s3">
+					<button class="waves-effect waves-light btn" type="submit">Adicionar</button>
+				</div>
+			</div>
 		</form>
 	</div>
+	<h5>Lista de convidados:</h5>
 
+	<table>
+		<thead>
+			<tr>
+				<th>Nome</th>
+				<th>RG</th>
+				<th>Ação</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			<tr th:each="convidado : ${convidados}">
+				<td><span th:text="${convidado.nomeConvidado}"></span></td>
+				<td><span th:text="${convidado.rg}"></span></td>
+				<td><a class="waves-effect waves-light btn-small"
+					th:href="${(#mvc.url('EC#deletarConvidado').arg(0,convidado.rg)).build()}"><i
+						class="material-icons center">delete</i></a></td>
+
+			</tr>
+		</tbody>
+	</table>
 
 	<script type="text/javascript" src="materialize/js/materialize.min.js"></script>
 </body>

@@ -3,6 +3,7 @@ package br.com.resource.evento.models;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "tb_evento")
@@ -21,14 +24,21 @@ public class Evento implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_evento")
 	private int idEvento;
-	@Column(nullable = false, length = 45)
+	
+	@NotNull
+	@Size(max=45)
 	private String nome;
-	@Column(nullable = false)
+	
+	@NotNull
 	private String local;
+	
+	@NotNull
 	private String data;
+	
+	@NotNull
 	private String horario;
 	
-	@OneToMany(mappedBy="evento")
+	@OneToMany(mappedBy="evento", orphanRemoval=true, cascade=CascadeType.PERSIST)
 	private List<Convidado> convidados;
 
 	public List<Convidado> getConvidados() {
