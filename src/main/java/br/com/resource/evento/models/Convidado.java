@@ -17,6 +17,8 @@ public class Convidado {
 	@NotNull
 	@Size(min=5, max=100) 
 	private String nomeConvidado;
+	
+	private Byte[] imgPerfil;
 
 	@ManyToOne
 	@JoinColumn(name = "evento_id")
@@ -45,5 +47,15 @@ public class Convidado {
 	public void setEvento(Evento evento) {
 		this.evento = evento;
 	}
+
+	public Byte[] getImgPerfil() {
+		return imgPerfil;
+	}
+
+	public void setImgPerfil(Byte[] imgPerfil) {
+		this.imgPerfil = imgPerfil;
+	}
+	
+	
 
 }
